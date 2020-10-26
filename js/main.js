@@ -52,45 +52,57 @@ console.clear();
     return dates;
   }
 
-  function createCalender() {
+  function renderTitle() {
+    const title = `${year}/${String(month + 1).padStart(2, '0')}`;
+    document.getElementById('title').textContent = title;
+  }
+
+  function clearCalender() {
     const tbody = document.querySelector('tbody');
 
     while (tbody.firstChild) {
       tbody.removeChild(tbody.firstChild);
     }
 
-    const title = `${year}/${String(month + 1).padStart(2, '0')}`;
-    document.getElementById('title').textContent = title;
+  }
 
-    const dates = [
-      ...getCalenderHead(),
-      ...getCalenderBody(),
-      ...getCalenderTail(),
-    ];
-    const weeks = [];
-    const weeksCount = dates.length / 7;
+function renderWeeks() {
+  const dates = [
+    ...getCalenderHead(),
+    ...getCalenderBody(),
+    ...getCalenderTail(),
+  ];
+  const weeks = [];
+  const weeksCount = dates.length / 7;
 
-    for (let i = 0; i < weeksCount; i++) {
-      weeks.push(dates.splice(0, 7));
-    }
+  for (let i = 0; i < weeksCount; i++) {
+    weeks.push(dates.splice(0, 7));
+  }
 
-      weeks.forEach(week => {
-        const tr = document.createElement('tr');
-        week.forEach(date => {
-          const td = document.createElement('td');
+    weeks.forEach(week => {
+      const tr = document.createElement('tr');
+      week.forEach(date => {
+        const td = document.createElement('td');
 
-          td.textContent = date.date;
-          if (date.isToday) {
-            td.classList.add('today');
-          }
-          if (date.isDisabled) {
-            td.classList.add('disabled');
-          }
+        td.textContent = date.date;
+        if (date.isToday) {
+          td.classList.add('today');
+        }
+        if (date.isDisabled) {
+          td.classList.add('disabled');
+        }
 
-          tr.appendChild(td);
-        });
-        document.querySelector('tbody').appendChild(tr);
+        tr.appendChild(td);
       });
+      document.querySelector('tbody').appendChild(tr);
+    });
+}
+
+  function createCalender() {
+    clearCalender();
+    renderTitle();
+    renderWeeks();
+    
   }
 
   document.getElementById('prev').addEventListener('click', () => {
