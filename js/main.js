@@ -131,6 +131,13 @@ function renderWeeks() {
     createCalender();
   });
 
+  document.getElementById('today').addEventListener('click', () => {
+    year = today.getFullYear();
+    month = today.getMonth();
+
+    createCalender();
+  });
+
   createCalender();
 
 }
